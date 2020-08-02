@@ -32,8 +32,6 @@ We would love you for the contribution to **Virtual Tourist**, check the ``LICEN
 Herbie Dodge – [@herbester89](https://twitter.com/Herbster89) – herbiedodge@gmail.com
 
 
-[https://github.com/yourname/github-link](https://github.com/dbader/)
-
 [swift-image]:https://img.shields.io/badge/swift-3.0-orange.svg
 [swift-url]: https://swift.org/
 [license-image]: https://img.shields.io/badge/License-MIT-blue.svg
