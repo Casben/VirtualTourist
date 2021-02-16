@@ -11,6 +11,7 @@ import UIKit
 class PhotoCell: UICollectionViewCell {
     
     //MARK: - Properties
+    
     static let reuseIdentifier = "PhotoCell"
     
     let imageView = UIImageView()
@@ -18,6 +19,7 @@ class PhotoCell: UICollectionViewCell {
     var imageUrl: String = ""
     
     //MARK: - Intializers
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         configure()
@@ -29,7 +31,7 @@ class PhotoCell: UICollectionViewCell {
         super.init(coder: coder)
     }
     
-    //MARK: - Configuration
+    //MARK: - Helpers
     func configure() {
         addSubviews(imageView, activityIndicator)
         

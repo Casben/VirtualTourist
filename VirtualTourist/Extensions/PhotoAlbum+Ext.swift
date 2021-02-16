@@ -11,6 +11,7 @@ import CoreData
 import MapKit
 
 //MARK: - MapView Delegate
+
 extension PhotoAlbumVC: MKMapViewDelegate {
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         let reuseId = "pin"

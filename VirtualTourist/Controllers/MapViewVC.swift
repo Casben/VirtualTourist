@@ -21,16 +21,49 @@ class MapViewVC: UIViewController {
     var pins: [Pin] = []
     
 
-    //MARK: - Lifecyles
+    //MARK: - Lifecyle
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         configure()
         loadAllPins()
     }
     
+    //MARK: - Helpers
     
+    func configure() {
+        configureMapView()
+        configureNavigationBar()
+        view.addSubviews(editHeaderView)
+        editHeaderView.addSubviews(editLabel)
+        
+        NSLayoutConstraint.activate([
+            editHeaderView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            editHeaderView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            editHeaderView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            editHeaderView.heightAnchor.constraint(equalToConstant: 50),
+            
+            editLabel.centerYAnchor.constraint(equalTo: editHeaderView.centerYAnchor),
+            editLabel.centerXAnchor.constraint(equalTo: editHeaderView.centerXAnchor),
+            editLabel.leadingAnchor.constraint(equalTo: editHeaderView.leadingAnchor),
+            editLabel.trailingAnchor.constraint(equalTo: editHeaderView.trailingAnchor)
+        ])
+        
+        editHeaderView.backgroundColor = .systemIndigo
+        editHeaderView.isHidden = true
+    }
     
-    //MARK: - Methods
+    func configureNavigationBar() {
+        navigationController?.navigationBar.tintColor = .systemIndigo
+        navigationItem.rightBarButtonItem = editButtonItem
+    }
+    
+    func configureMapView() {
+        view = mapView
+        mapView.delegate = self
+        let longPressTap = UILongPressGestureRecognizer(target: self, action: #selector(handleAddPinToMap(_:)))
+        mapView.addGestureRecognizer(longPressTap)
+    }
     
     func loadAllPins() {
         let fetchRequest: NSFetchRequest<Pin> = Pin.fetchRequest()
@@ -68,7 +101,7 @@ class MapViewVC: UIViewController {
         editHeaderView.isHidden = !editing
     }
     
-    //MARK: - Helpers
+    //MARK: - Methods
     
     @objc func handleAddPinToMap(_ sender: UITapGestureRecognizer) {
         let location = sender.location(in: mapView)
@@ -92,43 +125,10 @@ class MapViewVC: UIViewController {
             }
         }
     }
-    
-    func configure() {
-        configureMapView()
-        configureNavigationBar()
-        view.addSubviews(editHeaderView)
-        editHeaderView.addSubviews(editLabel)
-        
-        NSLayoutConstraint.activate([
-            editHeaderView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-            editHeaderView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            editHeaderView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            editHeaderView.heightAnchor.constraint(equalToConstant: 50),
-            
-            editLabel.centerYAnchor.constraint(equalTo: editHeaderView.centerYAnchor),
-            editLabel.centerXAnchor.constraint(equalTo: editHeaderView.centerXAnchor),
-            editLabel.leadingAnchor.constraint(equalTo: editHeaderView.leadingAnchor),
-            editLabel.trailingAnchor.constraint(equalTo: editHeaderView.trailingAnchor)
-        ])
-        
-        editHeaderView.backgroundColor = .systemIndigo
-        editHeaderView.isHidden = true
-    }
-    
-    func configureNavigationBar() {
-        navigationController?.navigationBar.tintColor = .systemIndigo
-        navigationItem.rightBarButtonItem = editButtonItem
-    }
-    
-    func configureMapView() {
-        view = mapView
-        mapView.delegate = self
-        let longPressTap = UILongPressGestureRecognizer(target: self, action: #selector(handleAddPinToMap(_:)))
-        mapView.addGestureRecognizer(longPressTap)
-    }
-    
 }
+
 //MARK: - MapView Delegate
+
 extension MapViewVC: MKMapViewDelegate {
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         let reuseId = "pin"

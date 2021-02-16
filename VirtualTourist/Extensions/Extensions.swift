@@ -9,7 +9,8 @@
 import UIKit
 import MapKit
 
-//MARK: - UIView Helper Methods
+//MARK: - UIView
+
 extension UIView {
     func addSubviews(_ views: UIView...) {
         for view in views {
@@ -20,6 +21,7 @@ extension UIView {
 }
 
 //MARK: - MapView
+
 extension MKMapView {
 
     func fitAll() {

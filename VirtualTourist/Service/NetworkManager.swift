@@ -9,12 +9,17 @@
 import UIKit
 
 struct NetworkManager {
+    
+    //MARK: - Properties
+    
     static let shared = NetworkManager()
     
     static let apiKey = "968a3fd91af6324158510cd873e48284"
     static let baseUrl = "https://api.flickr.com/services/rest"
     static let searchMethod = "flickr.photos.search"
     static let numberOfPhotos = 20
+    
+    //MARK: - Helpers
     
     func getPhotosAt(latitude: Double, longitude: Double, completion: @escaping (FlickrResponse?, Error?) -> Void) {
         let searchUrl = "\(NetworkManager.baseUrl)?api_key=\(NetworkManager.apiKey)&method=\(NetworkManager.searchMethod)&per_page=\(NetworkManager.numberOfPhotos)&format=json&nojsoncallback=1?&lat=\(latitude)&lon=\(longitude)&page=\((1...10).randomElement() ?? 1)"

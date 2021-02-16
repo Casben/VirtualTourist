@@ -12,6 +12,7 @@ class CustomLabel: UILabel {
     
     
     //MARK: - Initalizers
+    
     init(title: String, fontSize: CGFloat) {
         super.init(frame: .zero)
         configure(title: title, fontSize: fontSize)
@@ -22,7 +23,8 @@ class CustomLabel: UILabel {
     }
     
     
-    //MARK: - Configuration
+    //MARK: - Helpers
+    
     func configure(title: String, fontSize: CGFloat) {
         text = title
         textColor = .white

@@ -29,7 +29,7 @@ class PhotoAlbumVC: UIViewController {
     var deletedIndexPaths: [IndexPath]!
     var updatedIndexPaths: [IndexPath]!
     
-    //MARK: - Lifecycles
+    //MARK: - Lifecycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -43,7 +43,65 @@ class PhotoAlbumVC: UIViewController {
     }
     
     
-    //MARK: - Methods
+    //MARK: - Helpers
+    
+    func configure() {
+        configureResultsController(passedInPin)
+        view.addSubviews(mapView, collectionView, toolBar)
+        view.backgroundColor = .white
+        configureNavigationBar()
+        configureMapView()
+        
+        if let photos = passedInPin.photo, photos.count == 0 {
+            downloadPhotos()
+        }
+        
+        configureCollectionView()
+        toolBar.items = [toolBarSpacer, newCollectionButton, toolBarSpacer]
+        toolBar.tintColor = .systemIndigo
+        
+        NSLayoutConstraint.activate([
+            mapView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            mapView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            mapView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            mapView.heightAnchor.constraint(equalToConstant: 120),
+            
+            toolBar.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            toolBar.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
+            toolBar.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            toolBar.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            
+            collectionView.topAnchor.constraint(equalTo: mapView.bottomAnchor),
+            collectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            collectionView.bottomAnchor.constraint(equalTo: toolBar.bottomAnchor),
+            
+        ])
+        
+    }
+    
+    
+    func configureNavigationBar() {
+        let doneButton = UIBarButtonItem(title: "Done", style: .plain, target: self, action: #selector(dismissPhotoAlbum))
+        navigationItem.rightBarButtonItem = doneButton
+        navigationController?.navigationBar.tintColor = .systemIndigo
+    }
+    
+    func configureCollectionView() {
+        collectionView.dataSource = self
+        collectionView.delegate = self
+        collectionView.register(PhotoCell.self, forCellWithReuseIdentifier: PhotoCell.reuseIdentifier)
+        collectionView.backgroundColor = .white
+        
+    }
+    
+    func configureMapView() {
+        mapView.delegate = self
+        mapView.addAnnotation(passedInAnnotation)
+        mapView.isScrollEnabled = false
+        mapView.fitAll()
+    }
+    
     func configureResultsController(_ pin: Pin) {
         let fetchRequest: NSFetchRequest<Photo> = Photo.fetchRequest()
         let sortDescriptor = NSSortDescriptor(key: "name", ascending: false)
@@ -116,7 +174,7 @@ class PhotoAlbumVC: UIViewController {
         }
     }
     
-    //MARK: - Helpers
+    //MARK: - Methods
     
     @objc func dismissPhotoAlbum() {
         dismiss(animated: true)
@@ -131,62 +189,5 @@ class PhotoAlbumVC: UIViewController {
     }
     
     
-    //MARK: - Configuration
-    func configure() {
-        configureResultsController(passedInPin)
-        view.addSubviews(mapView, collectionView, toolBar)
-        view.backgroundColor = .white
-        configureNavigationBar()
-        configureMapView()
-        
-        if let photos = passedInPin.photo, photos.count == 0 {
-            // pin selected has no photos
-            downloadPhotos()
-        }
-        
-        configureCollectionView()
-        toolBar.items = [toolBarSpacer, newCollectionButton, toolBarSpacer]
-        toolBar.tintColor = .systemIndigo
-        
-        NSLayoutConstraint.activate([
-            mapView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-            mapView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            mapView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            mapView.heightAnchor.constraint(equalToConstant: 120),
-            
-            toolBar.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            toolBar.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
-            toolBar.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            toolBar.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            
-            collectionView.topAnchor.constraint(equalTo: mapView.bottomAnchor),
-            collectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            collectionView.bottomAnchor.constraint(equalTo: toolBar.bottomAnchor),
-            
-        ])
-        
-    }
     
-    
-    func configureNavigationBar() {
-        let doneButton = UIBarButtonItem(title: "Done", style: .plain, target: self, action: #selector(dismissPhotoAlbum))
-        navigationItem.rightBarButtonItem = doneButton
-        navigationController?.navigationBar.tintColor = .systemIndigo
-    }
-    
-    func configureCollectionView() {
-        collectionView.dataSource = self
-        collectionView.delegate = self
-        collectionView.register(PhotoCell.self, forCellWithReuseIdentifier: PhotoCell.reuseIdentifier)
-        collectionView.backgroundColor = .white
-        
-    }
-    
-    func configureMapView() {
-        mapView.delegate = self
-        mapView.addAnnotation(passedInAnnotation)
-        mapView.isScrollEnabled = false
-        mapView.fitAll()
-    }
 }
