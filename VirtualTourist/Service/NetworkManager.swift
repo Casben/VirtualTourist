@@ -14,7 +14,7 @@ struct NetworkManager {
     
     static let shared = NetworkManager()
     
-    static let apiKey = "968a3fd91af6324158510cd873e48284"
+    static let apiKey = ""
     static let baseUrl = "https://api.flickr.com/services/rest"
     static let searchMethod = "flickr.photos.search"
     static let numberOfPhotos = 20
