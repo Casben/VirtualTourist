@@ -1,10 +1,6 @@
 # Virtual Tourist
 > Take a virtual tour!
 
-[![Build Status][travis-image]][travis-url]
-[![License][license-image]][license-url]
-[![Platform](https://img.shields.io/cocoapods/p/LFAlertController.svg?style=flat)](http://cocoapods.org/pods/LFAlertController)
-[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](http://makeapullrequest.com)
 
 This app allows users to tap on a location on a map and place a pin to see photos associated with that location using the Flickr API. The app utilizes Core Data to save cache photos to reduce API calls. Photos can be seen in a collection view and can be deleted from the collection by tapping on a cell. New photo collections can be loaded in by tapping the New Collection button as well.
 
@@ -18,10 +14,6 @@ This project is apart of the Udaicty iOS Development Nanodegree.
 - [x] Photos are pesisted with Core Data
 
 
-## Requirements
-
-- iOS 13.0+
-- Xcode 11.6
 
 ## Contribute
 
